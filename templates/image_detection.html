@@ -1,0 +1,85 @@
+<!-- image-prediction.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Prediction</title>
+    <link rel="stylesheet" href="/static/styles2.css">
+</head>
+
+<body>
+    <header>
+        <h1>Image/Video Detection</h1>
+    </header>
+
+    <nav>
+        <a href="index_home.html">Home</a>
+        <!-- <div class="dropdown">
+            <a href="#">Predict</a>
+            <div class="dropdown-content">
+                <a href="#">Video</a>
+                <a href="webcam.html">Webcam</a>
+            </div>
+        </div> -->
+    </nav>
+
+    <form id="file-input-form" method="post" action="/detect" enctype="multipart/form-data">
+        <div id="image-upload">
+            <label for="file-input">Upload Image:</label>
+            <input style="padding-left:85px; padding-right: 85px;" type="file" id="file-input" name="file-input" accept="image/*">
+        </div>
+    </form>
+
+    <button onClick="predict()">Detect</button>
+
+    <div id="prediction-result">
+        <video width="640" height="360" controls>
+            <source src="{{ url_for('static', filename=result_image) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+            <a href="{{ url_for('static', filename=result_image) }}" target="_blank" style="margin-bottom: 200px"><img class="result-image" src="{{ url_for('static', filename=result_image) }}" alt="Prediction Result"></a>
+    </div>
+
+    <div id="sample-images">
+        <div class="sample-container">
+            <p class="sample-text">Sample Output 1</p>
+            <img class="sample-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSholm3tQHzFoEyb41x5RlvRNfjjw4XD9yVmtki1jGAZKEO-kMFw46S_cJsgK_L9mc2el4&usqp=CAU" alt="Sample 1"
+                onClick="loadSampleImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSholm3tQHzFoEyb41x5RlvRNfjjw4XD9yVmtki1jGAZKEO-kMFw46S_cJsgK_L9mc2el4&usqp=CAU')">
+        </div>
+        <div class="sample-container">
+            <p class="sample-text">Sample Output 2</p>
+            <img class="sample-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBqX7mQSJzOtAwh3s1srNVHqD8r-EzYqto3RsZKdkZXixlUN2r0JmbBIPHqQFqpHUG_7w&usqp=CAU" alt="Sample 2"
+                onClick="loadSampleImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBqX7mQSJzOtAwh3s1srNVHqD8r-EzYqto3RsZKdkZXixlUN2r0JmbBIPHqQFqpHUG_7w&usqp=CAU')">
+        </div>
+        <div class="sample-container">
+            <p class="sample-text">Sample Output 3</p>
+            <img class="sample-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNSne_qoE-NaIiiKRBbpsdOcXeQfHL9MmYag&usqp=CAU" alt="Sample 3"
+                onClick="loadSampleImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNSne_qoE-NaIiiKRBbpsdOcXeQfHL9MmYag&usqp=CAU')">
+        </div>
+    </div>
+
+    <script>
+        function predict() {
+            // Get input from either file upload or URL input
+            const fileInput = document.getElementById('file-input');
+    
+            // Choose either file input based on availability
+            const input = fileInput.files.length > 0 ? fileInput.files[0] : null;
+    
+            // Submit the form to trigger detection
+            if (input) {
+                document.getElementById('file-input-form').submit();
+            }
+        }
+    
+        function loadSampleImage(imageUrl) {
+            // Open the provided imageUrl in a new tab or window
+            window.open(imageUrl, '_blank');
+        }
+    </script>
+</body>
+
+</html>
